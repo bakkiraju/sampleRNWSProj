@@ -10,12 +10,6 @@ import {
 const parseString = require('react-native-xml2js').parseString;
 const timer = require('react-native-timer');
 
-function urlForQueryAndPage(key, value, pageNumber) {
-
-  const querystring = key + '=' + value;
-
-  return 'http://192.168.111.10:9980/run?' + querystring;
-}
 
 function strip(s) {
   return s.split('').filter(function (x) {
@@ -43,15 +37,14 @@ export default class testRunner extends Component {
     };
 
     console.log("Inital connection attempt to ws server");
-    this.hbsocket = new WebSocket('ws://192.168.111.10:9980/');
+    this.hbsocket = new WebSocket('ws://echo.websocket.org:80/');
   }
 
 
   _setupWebSocketHandlers() {
     this.hbsocket.onopen = (e) => {
-      this.hbsocket.send(JSON.stringify({ command: 'greet', payload: 'Hello server!' }));
       this._startHearBeat();
-      console.log("Connection to jungu opened");
+      console.log("Connection to echo server  opened");
     };
     this.hbsocket.onclose = (e) => { this.hbsocket = null; this._stopHeartBeat(); console.log("web socket closed ::",e.reason, "::",e.code) };
     this.hbsocket.onerror = (e) => { this.hbsocket = null; console.log(e.message); };
@@ -79,7 +72,7 @@ export default class testRunner extends Component {
 
   _establishConnection() {
     console.log("trying to establish new connection with jungu server");
-    this.hbsocket = new WebSocket('ws://192.168.111.10:9980/');
+    this.hbsocket = new WebSocket('ws://echo.websocket.org:80');
     this._setupWebSocketHandlers();
   }
 
