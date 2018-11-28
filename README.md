@@ -14,4 +14,5 @@ To run on a android virtual device (AVD) simulator, star the simulator and then
 
 To run on real android device
 >  adb connect <device>
+  
 >  react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android
